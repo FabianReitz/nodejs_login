@@ -2,6 +2,9 @@
 
 A proof of concept on how to store and access user credentials in MongoDB.
 
+## ToDo
+- hash passwords
+
 ## Installation
 
 ### Install Git, Node.js, Docker and a nice browser
