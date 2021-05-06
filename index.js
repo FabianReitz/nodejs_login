@@ -2,7 +2,6 @@ import express, { response } from 'express';
 import session from 'express-session';
 import path from 'path';
 import mongoose from 'mongoose';
-import Model from './models/user.js'
 
 const __dirname = path.resolve(path.dirname('')); 
 
