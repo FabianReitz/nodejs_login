@@ -3,12 +3,15 @@ import session from 'express-session';
 import path from 'path';
 import mongoose from 'mongoose';
 
-const __dirname = path.resolve(path.dirname('')); 
+const __dirname = path.resolve(path.dirname(''));
 
 const CONNECTION_URL = `mongodb://localhost:27017/database`;
 const PORT = 5000;
 
-mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(CONNECTION_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
 const db = mongoose.connection;
 
@@ -18,13 +21,14 @@ db.once('open', function () {
     console.log('Successfully connected to database!');
 });
 
-
 const app = express();
-app.use(session({
-    secret: 'secret',
-    resave: true,
-    saveUninitialized: true
-}));
+app.use(
+    session({
+        secret: 'secret',
+        resave: true,
+        saveUninitialized: true,
+    })
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -44,6 +48,7 @@ app.post('/auth', function (req, res) {
             if (user) {
                 req.session.loggedin = true;
                 req.session.username = username;
+                req.session.favoriteAnimal = user.favoriteAnimal;
                 res.redirect('/home');
                 console.log(`New login by: ${username}`);
             } else {
@@ -59,7 +64,13 @@ app.post('/auth', function (req, res) {
 
 app.get('/home', function (req, res) {
     if (req.session.loggedin) {
-        res.send('Welcome back, ' + req.session.username + '!');
+        res.send(
+            'Welcome back, ' +
+                req.session.username +
+                '! ' +
+                'Your favorite animal is ' +
+                req.session.favoriteAnimal
+        );
     } else {
         res.send('Please login to view this page!');
     }
