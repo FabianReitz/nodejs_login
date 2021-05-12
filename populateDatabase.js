@@ -16,13 +16,25 @@ db.once('open', function () {
     console.log('Successfully connected to database!');
 });
 
-const testUser = new Model({
-    username: 'testUser',
+const testUser1 = new Model({
+    username: 'testUser1',
     password: '1234',
     favoriteAnimal: 'Wombat',
 });
 
-testUser.save(function (err, doc) {
+const testUser2 = new Model({
+    username: 'testUser2',
+    password: '1234',
+    favoriteAnimal: 'Dog',
+});
+
+testUser1.save(function (err, doc) {
+    if (err) return console.error(err);
+    console.log('User has been created!');
+    process.exit();
+});
+
+testUser2.save(function (err, doc) {
     if (err) return console.error(err);
     console.log('User has been created!');
     process.exit();
